@@ -1,0 +1,56 @@
+[frontmatter]
+date = ["date", "publishDate", "lastmod"]
+lastmod = [":git", "lastmod", "date", "publishDate"]
+publishDate = ["publishDate", "date"]
+expiryDate = ["expiryDate"]
+
+baseURL = "/"
+languageCode = "en-US"
+defaultContentLanguage = "en"
+title = "AM Cash Developer Portal"
+theme = "hugo-theme-learn"
+themesdir = "../.."
+metaDataFormat = "yaml"
+defaultContentLanguageInSubdir= true
+copyright = "Copyright © 2019, LoyaltyOne; all rights reserved."
+canonifyurls = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+pygmentsStyle = "default"
+enableGitInfo = true
+sectionPagesMenu = "main"
+
+[[menu.shortcuts]] 
+name = "<i class='fas fa-code'></i> OpenAPI (SwaggerSpec)"
+url = "/swagger-spec"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-book'></i> Release Notes"
+url = "/release-notes"
+weight = 30
+
+[[menu.shortcuts]]
+name = "<i class='far fa-edit'></i> Change-Log"
+url = "/change-log"
+weight = 40
+
+[params]
+  editURL = "/"
+  description = "Guide to AM Cash API integration."
+  author = "Mike Emersic"
+  showVisitedLinks = false
+  disableBreadcrumb = true
+  disableNextPrev = false
+  disableSearch = false
+  disableAssetBusting = false
+  disableInlineCopyToCLipboard = false
+  disableShortcutsTitle = false
+  disableLanguageSwitchingButton = false
+  ordersectionsby = "weight"
+  themeVariant = "blue"
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+

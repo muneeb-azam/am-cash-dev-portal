@@ -1,0 +1,337 @@
+{
+	"id": "eadb524a-aa67-4712-b742-4333c8cebd09",
+	"name": "AM Cash",
+	"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"18c21691-d143-45fa-885b-c39fd30b0936",
+		"10a0c8dc-33d2-4bdb-81d7-13718d4693ac",
+		"c45faa90-c8be-4ff2-90d5-897ff71bae45",
+		"05761e24-4248-4d73-8253-e4a348eafb85",
+		"8b4a3e43-ab12-49f8-9e8e-9bb30b18d4a0",
+		"89172ca0-6e0a-4d3e-acf2-ade353e76680"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "05761e24-4248-4d73-8253-e4a348eafb85",
+			"name": "Inquiry",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/partners/me/amcash/inquire",
+			"description": "The AMCash Inquiry message exchange is used to get balance and product offers information.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer {{token}}"
+				},
+				{
+					"key": "X-Request-Id",
+					"value": "5da9272b-023a-403a-826c-4264def7dc48",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3bf75c9-3ed2-4caa-a903-43a4a8459a6a",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"responseCode == 0000\", function () {",
+							"    pm.expect(response.responseCode).to.eql(\"0000\");",
+							"});",
+							"",
+							"pm.test(\"message == Approved\", function () {",
+							"    pm.expect(response.message).to.eql(\"Approved\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n    \"collectorNumber\": \"{{collectorNumber}}\",\r\n    \"postTaxBasketAmount\": \"10.00\",\r\n    \"traceId\": \"999999999999\",\r\n    \"dateTime\": \"2018-10-04T04:39:59.503-0400\",\r\n    \"cardEntryMode\": \"scan\",\r\n    \"acquirerId\": \"100001\",\r\n    \"vendorId\": \"100087\",\r\n    \"sponsorCode\": \"LOY1\",\r\n    \"deviceId\": \"202\",\r\n    \"storeId\": \"0061\"\r\n}",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer {{token}}\nX-Request-Id: 5da9272b-023a-403a-826c-4264def7dc48\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "10a0c8dc-33d2-4bdb-81d7-13718d4693ac",
+			"name": "Health",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/instantpos-rest-api/health",
+			"description": "Health check for AM Cash API",
+			"data": null,
+			"dataMode": null,
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer {{token}}"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"headers": "Authorization: Bearer {{token}}\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "18c21691-d143-45fa-885b-c39fd30b0936",
+			"name": "Get Token",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/oauth/token",
+			"description": "Get access_token from Auth0 to use in other requests. For each requests below, we must get token first.",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_id",
+					"value": "{{am-cash_client_id}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_secret",
+					"value": "{{am-cash_client_secret}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "audience",
+					"value": "https://partners.loyalty.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "646dc6f2-a09f-4356-bf7a-fa306fb0bf8d",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"//pm.environment.set(\"token\", data.access_token);",
+							"pm.globals.set(\"token\", data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "89172ca0-6e0a-4d3e-acf2-ade353e76680",
+			"name": "Reversal",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/partners/me/amcash/reverse",
+			"description": "A Reversal (Void) request/response message exchange is used to void the Air Miles Reward Miles redemption done as part of a collector purchase transaction, for example due to an error during the redemption message exchange.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer {{token}}"
+				},
+				{
+					"key": "X-Request-Id",
+					"value": "5da9272b-023a-403a-826c-4264def7dc48",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc6dfe66-41c3-40bf-982e-ff5a1955f40a",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"responseCode == 0000\", function () {",
+							"    pm.expect(response.responseCode).to.eql(\"0000\");",
+							"});",
+							"",
+							"pm.test(\"message == Approved\", function () {",
+							"    pm.expect(response.message).to.eql(\"Approved\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n    \"collectorNumber\": \"{{collectorNumber}}\",\n    \"traceId\": \"999999999999\",\n    \"dateTime\": \"2018-10-04T04:39:59.503-0400\",\n    \"redemptionConfirmationNum\": \"{{txnConfirmationNumber}}\",\n    \"cardEntryMode\": \"swipe\",\n    \"acquirerId\": \"130011\",\n    \"vendorId\": \"100087\",\n    \"instantMessage\": \"en-CA\",\n    \"sponsorCode\": \"LOY1\",\n    \"deviceId\": \"01\",\n    \"storeId\": \"0001\"\n}",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer {{token}}\nX-Request-Id: 5da9272b-023a-403a-826c-4264def7dc48\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "8b4a3e43-ab12-49f8-9e8e-9bb30b18d4a0",
+			"name": "Redemption",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/partners/me/amcash/redeem",
+			"description": "The AMCash Redemption request/response message exchange is used to redeem Cash Air Miles Reward Miles. In the AMCash redemption transaction, the cashier will request a redemption amount dollarRedeemRequest and the Instant platform will automatically adjust the amount requested and redeem for the maximum eligible amount less than or equal to the Post Tax Basket Value after verification of the collector information and balance.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer {{token}}"
+				},
+				{
+					"key": "X-Request-Id",
+					"value": "5da9272b-023a-403a-826c-4264def7dc48",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82cadc7e-c42e-4ca8-8e09-68564088a79b",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"//pm.environment.set(\"token\", data.access_token);",
+							"pm.globals.set(\"txnConfirmationNumber\", data.txnConfirmationNumber);",
+							"//console.log(\"confirm#: \", txnConfirmationNumber);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.datae.status(200);",
+							"});",
+							"",
+							"pm.test(\"responseCode == 0000\", function () {",
+							"    pm.expect(response.responseCode).to.eql(\"0000\");",
+							"});",
+							"",
+							"pm.test(\"message == Approved\", function () {",
+							"    pm.expect(response.message).to.eql(\"Approved\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n    \"collectorNumber\": \"{{collectorNumber}}\",\n    \"postTaxBasketAmount\": \"50.00\",\n    \"traceId\": \"999999999999\",\n    \"dateTime\": \"2018-10-04T04:39:59.503-0400\",\n    \"cardEntryMode\": \"swipe\",\n    \"acquirerId\": \"100001\",\n    \"vendorId\": \"100087\",\n    \"instantMessage\": \"en-CA\",\n    \"sponsorCode\": \"LOY1\",\n    \"deviceId\": \"01\",\n    \"storeId\": \"0061\",\n    \"dollarRedeemRequest\": \"10\",\n    \"preTaxBasketAmount\":\"50.00\"\n}",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer {{token}}\nX-Request-Id: 5da9272b-023a-403a-826c-4264def7dc48\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "c45faa90-c8be-4ff2-90d5-897ff71bae45",
+			"name": "EchoTest",
+			"url": "{{am-cash_domain}}/{{am-cash_resource}}/partners/me/amcash/echo",
+			"description": "The Echo Test message exchange is used to confirm that the Instant POS Platform is online and ready to process.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer {{token}}"
+				},
+				{
+					"key": "X-Request-Id",
+					"value": "5da9272b-023a-403a-826c-4264def7dc48",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "458db5cd-2fd5-437f-88b8-2658ada853e0",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"responseCode == 0000\", function () {",
+							"    pm.expect(response.responseCode).to.eql(\"0000\");",
+							"});",
+							"",
+							"pm.test(\"message == Approved\", function () {",
+							"    pm.expect(response.message).to.eql(\"Approved\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n    \"traceId\" : \"999999999999\",\n    \"sponsorCode\":\"LOY1\",\n    \"storeId\": \"0001\",\n    \"deviceId\": \"313\",\n    \"vendorId\": \"100087\"\n}",
+			"headers": "Content-Type: application/json\nAuthorization: Bearer {{token}}\nX-Request-Id: 5da9272b-023a-403a-826c-4264def7dc48\n",
+			"pathVariables": {}
+		}
+	]
+}
