@@ -4,4 +4,4 @@ weight = 20
 +++
 ---
 
-{{< oai-spec url="json/am-cash/swagger2.json" api_key="" >}}
+{{< oai-spec url="json/am-cash/swagger.json" api_key="" >}}

@@ -1,0 +1,402 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "AirMiles Cash Point of Sale RESTful API.",
+    "version" : "v1",
+    "title" : "AM Cash POS API",
+    "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
+    "contact" : {
+      "name" : "Rajib Ahsan",
+      "url" : "developer.airmiles.ca",
+      "email" : "rahsan@loyalty.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "sandbox.api.loyalty.com",
+  "basePath" : "/v1",
+  "tags" : [ {
+    "name" : "AM Cash",
+    "description" : "Actions available toward AM Cash"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/health" : {
+      "get" : {
+        "tags" : [ "AM Cash" ],
+        "operationId" : "ping",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/partners/me/amcash/echo" : {
+      "post" : {
+        "tags" : [ "AM Cash" ],
+        "summary" : "Used by a client to test the AM Cash",
+        "description" : "",
+        "operationId" : "echoTest",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EchoTestReq"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "AM Cash is up and running",
+            "schema" : {
+              "$ref" : "#/definitions/Iterable"
+            }
+          },
+          "400" : {
+            "description" : "Request sent might be incorrect"
+          },
+          "408" : {
+            "description" : "Request timed out"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Scheduled outage"
+          }
+        }
+      }
+    },
+    "/partners/me/amcash/inquire" : {
+      "post" : {
+        "tags" : [ "AM Cash" ],
+        "summary" : "Used by a client to check for AM Cash eligibility",
+        "description" : "",
+        "operationId" : "amCashInquiry",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/AMCashInquiryReq"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request processed successfully",
+            "schema" : {
+              "$ref" : "#/definitions/Iterable"
+            }
+          },
+          "202" : {
+            "description" : "Request was accepted, see response for details"
+          },
+          "400" : {
+            "description" : "Request sent might be incorrect"
+          },
+          "401" : {
+            "description" : "Unauthorized collector"
+          },
+          "403" : {
+            "description" : "Invalid validation method"
+          },
+          "408" : {
+            "description" : "Request timed out"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Scheduled outage"
+          }
+        }
+      }
+    },
+    "/partners/me/amcash/redeem" : {
+      "post" : {
+        "tags" : [ "AM Cash" ],
+        "summary" : "Used by a client to check to Redeem for AM Cash",
+        "description" : "",
+        "operationId" : "amCashRedemption",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RedemptionReq"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request processed successfully",
+            "schema" : {
+              "$ref" : "#/definitions/Iterable"
+            }
+          },
+          "202" : {
+            "description" : "Request was accepted, see response for details"
+          },
+          "400" : {
+            "description" : "Request sent might be incorrect"
+          },
+          "401" : {
+            "description" : "Unauthorized collector"
+          },
+          "403" : {
+            "description" : "Invalid validation method"
+          },
+          "408" : {
+            "description" : "Request timed out"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Scheduled outage"
+          }
+        }
+      }
+    },
+    "/partners/me/amcash/reverse" : {
+      "post" : {
+        "tags" : [ "AM Cash" ],
+        "summary" : "Used by a client to Reverse an AM Cash Redemption",
+        "description" : "",
+        "operationId" : "reverseRedemption",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ReversalReq"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Request processed successfully",
+            "schema" : {
+              "$ref" : "#/definitions/Iterable"
+            }
+          },
+          "202" : {
+            "description" : "Request was accepted, see response for details"
+          },
+          "400" : {
+            "description" : "Request sent might be incorrect"
+          },
+          "401" : {
+            "description" : "Unauthorized collector"
+          },
+          "403" : {
+            "description" : "Invalid validation method"
+          },
+          "408" : {
+            "description" : "Request timed out"
+          },
+          "409" : {
+            "description" : "The request context has changed"
+          },
+          "500" : {
+            "description" : "Server error"
+          },
+          "503" : {
+            "description" : "Scheduled outage"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "AMCashInquiryReq" : {
+      "type" : "object",
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        },
+        "collectorNumber" : {
+          "type" : "string"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "traceId" : {
+          "type" : "string"
+        },
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "vendorId" : {
+          "type" : "string"
+        },
+        "timeZone" : {
+          "type" : "string"
+        },
+        "sponsorCode" : {
+          "type" : "string"
+        },
+        "storeId" : {
+          "type" : "string"
+        },
+        "deviceId" : {
+          "type" : "string"
+        },
+        "dateTime" : {
+          "type" : "string"
+        },
+        "postTaxBasketAmount" : {
+          "type" : "string"
+        },
+        "instantMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "EchoTestReq" : {
+      "type" : "object",
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        },
+        "collectorNumber" : {
+          "type" : "string"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "traceId" : {
+          "type" : "string"
+        },
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "vendorId" : {
+          "type" : "string"
+        },
+        "timeZone" : {
+          "type" : "string"
+        },
+        "sponsorCode" : {
+          "type" : "string"
+        },
+        "storeId" : {
+          "type" : "string"
+        },
+        "deviceId" : {
+          "type" : "string"
+        },
+        "dateTime" : {
+          "type" : "string"
+        }
+      }
+    },
+    "RedemptionReq" : {
+      "type" : "object",
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        },
+        "collectorNumber" : {
+          "type" : "string"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "traceId" : {
+          "type" : "string"
+        },
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "vendorId" : {
+          "type" : "string"
+        },
+        "timeZone" : {
+          "type" : "string"
+        },
+        "sponsorCode" : {
+          "type" : "string"
+        },
+        "storeId" : {
+          "type" : "string"
+        },
+        "deviceId" : {
+          "type" : "string"
+        },
+        "dateTime" : {
+          "type" : "string"
+        },
+        "postTaxBasketAmount" : {
+          "type" : "string"
+        },
+        "dollarRedeemRequest" : {
+          "type" : "string"
+        },
+        "originalPostTaxBasketAmount" : {
+          "type" : "string"
+        },
+        "originalPreTaxAmount" : {
+          "type" : "string"
+        },
+        "instantMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ReversalReq" : {
+      "type" : "object",
+      "properties" : {
+        "endpoint" : {
+          "type" : "string"
+        },
+        "collectorNumber" : {
+          "type" : "string"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "traceId" : {
+          "type" : "string"
+        },
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "vendorId" : {
+          "type" : "string"
+        },
+        "timeZone" : {
+          "type" : "string"
+        },
+        "sponsorCode" : {
+          "type" : "string"
+        },
+        "storeId" : {
+          "type" : "string"
+        },
+        "deviceId" : {
+          "type" : "string"
+        },
+        "dateTime" : {
+          "type" : "string"
+        },
+        "redemptionConfirmationNum" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

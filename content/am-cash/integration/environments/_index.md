@@ -1,7 +1,7 @@
 +++
 title = "Integration Environments"
-pre = "3. "
-weight = 30
+pre = "2. "
+weight = 20
 +++
 ---
 
